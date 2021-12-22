@@ -35,15 +35,30 @@ light_grey = (200, 200, 200)
 
 ball_speed_x = 7
 ball_speed_y = 7
+player_speed = 0
 
 while True:
-    # Handles input
+    # Handles exit game
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
 
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_DOWN:
+                player_speed += 7
+            if event.key == pygame.K_UP:
+                player_speed -= 7
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_DOWN:
+                player_speed -= 7
+            if event.key == pygame.K_UP:
+                player_speed += 7
+
+
+
     ball_animation()
+    player.y += player_speed
 
 
 
