@@ -13,8 +13,27 @@ def ball_animation():
     if ball.left <= 0 or ball.right >= screen_width: #horizontal axis
         ball_speed_x *= -1
 
+    # bounce off paddles
     if ball.colliderect(player) or ball.colliderect(opponent):
-        ball_speed_x += -1
+        ball_speed_x *= -1
+
+def player_animation():
+    player.y += player_speed
+    if player.top <= 0:
+        player.top = 0
+    if player.bottom >= screen_height:
+        player.bottom = screen_height
+
+def opponent_ai():
+    if opponent.top < ball.y:
+        opponent.top += opponent_speed
+    if opponent.bottom > ball.y:
+        opponent.bottom -= opponent_speed
+    if opponent.top <= 0:
+        opponent.top = 0
+    if opponent.bottom >= screen_height:
+        opponent.bottom = screen_height
+
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -33,9 +52,13 @@ opponent = pygame.Rect(10, screen_height/2 - 70, 10, 140)
 bg_color = pygame.Color('grey12')
 light_grey = (200, 200, 200)
 
+# speeds inside game
 ball_speed_x = 7
 ball_speed_y = 7
 player_speed = 0
+opponent_speed = 7
+
+
 
 while True:
     # Handles exit game
@@ -58,8 +81,8 @@ while True:
 
 
     ball_animation()
-    player.y += player_speed
-
+    player_animation()
+    opponent_ai()
 
 
     #visuals-background is put first. Last thing to render goes up top.
