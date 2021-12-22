@@ -1,4 +1,4 @@
-import pygame, sys
+import pygame, sys, random
 
 def ball_animation():
     global ball_speed_x, ball_speed_y
@@ -11,7 +11,7 @@ def ball_animation():
     if ball.top <= 0 or ball.bottom >= screen_height: #verticle axis
         ball_speed_y *= -1
     if ball.left <= 0 or ball.right >= screen_width: #horizontal axis
-        ball_speed_x *= -1
+        ball_restart()
 
     # bounce off paddles
     if ball.colliderect(player) or ball.colliderect(opponent):
@@ -34,6 +34,11 @@ def opponent_ai():
     if opponent.bottom >= screen_height:
         opponent.bottom = screen_height
 
+def ball_restart():
+    global ball_speed_x, ball_speed_y
+    ball.center = (screen_width/2, screen_height/2)
+    ball_speed_y *= random.choice((1, -1))
+    ball_speed_x *= random.choice((1, -1))
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -53,12 +58,10 @@ bg_color = pygame.Color('grey12')
 light_grey = (200, 200, 200)
 
 # speeds inside game
-ball_speed_x = 7
-ball_speed_y = 7
+ball_speed_x = 7 * random.choice((1, -1))
+ball_speed_y = 7 * random.choice((1, -1))
 player_speed = 0
 opponent_speed = 7
-
-
 
 while True:
     # Handles exit game
@@ -72,6 +75,7 @@ while True:
                 player_speed += 7
             if event.key == pygame.K_UP:
                 player_speed -= 7
+
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_DOWN:
                 player_speed -= 7
@@ -79,11 +83,9 @@ while True:
                 player_speed += 7
 
 
-
     ball_animation()
     player_animation()
     opponent_ai()
-
 
     #visuals-background is put first. Last thing to render goes up top.
     screen.fill(bg_color)
@@ -91,7 +93,6 @@ while True:
     pygame.draw.rect(screen, light_grey, opponent)
     pygame.draw.ellipse(screen, light_grey, ball)
     pygame.draw.aaline(screen, light_grey, (screen_width/2, 0), (screen_width/2, screen_height))
-
 
     #updates the window
     pygame.display.flip()
