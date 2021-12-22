@@ -23,10 +23,12 @@ while True:
             pygame.quit()
             sys.exit()
 
-    #visuals
+    #visuals-background is put first. Last thing to render goes up top.
+    screen.fill(bg_color)
     pygame.draw.rect(screen, light_grey, player)
     pygame.draw.rect(screen, light_grey, opponent)
     pygame.draw.ellipse(screen, light_grey, ball)
+    pygame.draw.aaline(screen, light_grey, (screen_width/2, 0), (screen_width/2, screen_height))
 
 
     #updates the window
