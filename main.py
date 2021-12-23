@@ -1,5 +1,47 @@
 import pygame, sys, random
 
+class Block(pygame.sprite.Sprite):
+
+class Player(Block):
+
+class Ball(Block):
+
+class opponent(Block):
+
+class GameManager:
+
+
+#set up
+pygame.mixer.pre_init(44100, -16, 2, 512)
+pygame.init()
+clock = pygame.time.Clock()
+
+#window
+screen_width = 1200
+screen_height = 960
+screen = pygame.display.set_mode((screen_width, screen_height))
+pygame.display.set_caption("Pong")
+
+#globals
+
+bg_color = pygame.Color("#2F37dF")
+accent_color = (27, 35, 43)
+basic_font = pygame.cont.Font('freesansbold.ttf', 32)
+plob_sound = pygame.mixer.Sound("pong.ogg")
+score_sound = pygame.mixer.Sound("score.ogg")
+middle_strip = pygame.Rect(screen_width/2 - 2, 0, 4, screen_height)
+
+
+
+
+
+
+
+
+
+
+
+
 def ball_animation():
     global ball_speed_x, ball_speed_y, player_score, opponent_score, score_time
     #ball speed
