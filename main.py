@@ -19,10 +19,15 @@ def ball_animation():
         opponent_score += 1
         score_time = pygame.time.get_ticks()
 
-
     # bounce off paddles
-    if ball.colliderect(player) or ball.colliderect(opponent):
-        ball_speed_x *= -1
+    if ball.colliderect(player) and ball_speed_x > 0:
+        if abs(ball.right - player.left) < 10:
+            ball_speed_x *= -1
+
+    if ball.colliderect(opponent) and ball_speed_x < 0:
+        if abs(ball.right - opponent.right) < 10:
+            ball_speed_x *= -1
+
 
 def player_animation():
     player.y += player_speed
@@ -80,7 +85,7 @@ pygame.display.set_caption("Pong")
 
 #draws our ball and paddles
 ball = pygame.Rect(screen_width/2 - 15, screen_height/2 - 15,  30, 30)
-player = pygame.Rect(screen_width - 20, screen_height/2 - 70, 10, 140)
+player = pygame.Rect(screen_width - 20 - 300, screen_height/2 - 70, 10 + 300, 140)
 opponent = pygame.Rect(10, screen_height/2 - 70, 10, 140)
 
 bg_color = pygame.Color('grey12')
