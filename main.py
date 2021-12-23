@@ -1,10 +1,54 @@
 import pygame, sys, random
 
 class Block(pygame.sprite.Sprite):
+    def __init__(self, path, x_pos, y_pos):
+        super().__init__()
+        self.image = pygame.image.load(path)
+        self.rect = self.image.get_rect(center = (x_pos, y_pos))
 
 class Player(Block):
+    def __init__(self, path, x_pos, y_pos, speed):
+        super().__init__(path, x_pos, y_pos)
+        self.speed = speed
+        self.movement = 0
+
+    def screen_constrain(self):
+        if self.rect.top <= 0:
+            self.rect.top = 0
+        if self.rect.bottom >= screen_height:
+            self.rect.bottom = screen_height
+
+    def update(self, ball_group):
+        self.rect.y += self.movement
+        self.screen_constrain()
 
 class Ball(Block):
+    def __init__(self, path, x_pos, y_pos, speed_x, speed_y, paddles):
+        super().__init__(path, x_pos, y_pos)
+        self.speed_x = speed_x * random.choice((-1, 1))
+        self.speed_y = speed_y * random.choice((-1, 1))
+        self.paddles = paddles
+        self.active = False
+        self.score_time = 0
+
+    def update(self):
+        if self.active:
+            self.rect.x += self.speed_x
+            self.rect.y += self.speed_y
+            self.collisions()
+        else:
+            self.restart_counter()
+
+    def collisions(self):
+        if self.rect.top <= 0 or self.rect.bottom >= screen_height:
+            pygame.mixer.Sound.play(plob_sound)
+            self.speed_y *= -1
+
+        if pygame.sprite.spritecollide(self, self.paddles, False):
+            pygame.mixer.Sound.play(plob_sound)
+            collision_paddle = pygame.sprite.spritecollide(self, self.paddles.False)[0].rect
+            if abs(self.rect.right - collision_paddle.left) < 10 and self.speed_x > 0:
+
 
 class Opponent(Block):
 
