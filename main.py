@@ -130,7 +130,13 @@ class GameManager:
 
     def draw_score(self):
         player_score = basic_font.render(str(self.player_score), True, accent_color)
+        opponent_score = basic_font.render(str(self.opponent_score), True, accent_color)
 
+        player_score_rect = player_score.get_rect(midleft = (screen_width / 2 + 40, screen_height/2))
+        opponent_score_rect = opponent_score.get_rect(midright = (screen_width / 2 - 40, screen_height/2))
+
+        screen.blit(player_score, player_score_rect)
+        screen.blit(opponent_score, opponent_score_rect)
 
 
 
@@ -178,13 +184,13 @@ while True:
             if event.key == pygame.K_UP:
                 player.movement -= player.speed
             if event.key == pygame.K_DOWN:
-                player_speed += player.speed
+                player.movement += player.speed
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_UP:
                 player.movement += player.speed
             if event.key == pygame.K_DOWN:
-                player_speed -= player.speed
+                player.movement -= player.speed
 
 screen.fill(bg_color)
 pygame.draw.rect(screen, accent_color, middle_strip)
