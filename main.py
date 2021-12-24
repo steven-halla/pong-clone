@@ -63,7 +63,7 @@ class Ball(Block):
         self.speed_x *= random.choice((-1, 1))
         self.speed_y *= random.choice((-1, 1))
         self.score_time = pygame.time.get_ticks()
-        self.rect.center(screen_width/2, screen_height/2)
+        self.rect.center = (screen_width / 2, screen_height / 2)
         pygame.mixer.Sound.play(score_sound)
 
     def restart_counter(self):
@@ -121,7 +121,7 @@ class GameManager:
         self.draw_score()
 
     def reset_ball(self):
-        if self.ball_group.rect.right >= screen_height:
+        if self.ball_group.sprite.rect.right >= screen_width:
             self.opponent_score += 1
             self.ball_group.sprite.reset_ball()
         if self.ball_group.sprite.rect.left <= 0:
@@ -192,13 +192,14 @@ while True:
             if event.key == pygame.K_DOWN:
                 player.movement -= player.speed
 
-screen.fill(bg_color)
-pygame.draw.rect(screen, accent_color, middle_strip)
 
-game_manager.run_game()
+    screen.fill(bg_color)
+    pygame.draw.rect(screen, accent_color, middle_strip)
 
-pygame.display.flip()
-clock.tick(120)
+    game_manager.run_game()
+
+    pygame.display.flip()
+    clock.tick(120)
 
 
 
